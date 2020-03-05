@@ -1,13 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
     
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
         <PackageId>ThomasDeWulf.Tools.Core</PackageId>
         <Version>0.0.1</Version>
         <Authors>Thomas de Wulf</Authors>
         <Company>Thomas de Wulf</Company>
         <PackageDescription>Some commonly reused classes/helpers used in personal projects.</PackageDescription>
         <RepositoryUrl>https://github.com/thomasdewulf/netcore-tools</RepositoryUrl>
+        <TargetFramework>netcoreapp3.0</TargetFramework>
     </PropertyGroup>
+    
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    </ItemGroup>
 
 </Project>
