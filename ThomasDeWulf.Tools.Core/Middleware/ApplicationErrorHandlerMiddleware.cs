@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using ThomasDeWulf.Tools.Core.Exceptions;
 using ThomasDeWulf.Tools.Core.Responses;
 
@@ -12,13 +13,14 @@ namespace ThomasDeWulf.Tools.Core.Middleware
 {
     public class ApplicationErrorHandlerMiddleware
     {
-        private readonly RequestDelegate next;
-        private readonly IWebHostEnvironment env;
+        private readonly RequestDelegate _next;
+        private readonly IWebHostEnvironment _env;
+        private readonly ILogger _logger;
 
-        public ApplicationErrorHandlerMiddleware(RequestDelegate next, IWebHostEnvironment env)
+        public ApplicationErrorHandlerMiddleware(RequestDelegate next, IWebHostEnvironment env, ILogger logger)
         {
-            this.next = next;
-            this.env = env;
+            _next = next;
+            _env = env;
         }
 
         /// <summary>
@@ -30,14 +32,16 @@ namespace ThomasDeWulf.Tools.Core.Middleware
         {
             try
             {
-                await next(context);
+                await _next(context);
             }
             catch (HttpStatusCodeException e) //An exception we made with a custom statusCode and/or message.
             {
+                _logger.LogWarning(e.ToString());
                await HandleExceptionAsync(context, e);
             }
             catch (Exception e) //An other exception is thrown
             {
+                _logger.LogError(e.ToString());
                 await HandleExceptionAsync(context, e);
             }
         }
@@ -67,7 +71,7 @@ namespace ThomasDeWulf.Tools.Core.Middleware
                 DetailedMessage = exception.Message
             };
 
-            if (env.IsDevelopment())
+            if (_env.IsDevelopment())
             {
                 response.StackTrace = exception.StackTrace;
             }
