@@ -21,6 +21,7 @@ namespace ThomasDeWulf.Tools.Core.Middleware
         {
             _next = next;
             _env = env;
+            _logger = logger;
         }
 
         /// <summary>
