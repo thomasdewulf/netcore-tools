@@ -14,6 +14,6 @@ See https://help.github.com/en/packages/using-github-packages-with-your-projects
 ## Publishing a new version
 
 - Bump the version of the package in the .csproj file
-- ´dotnet pack --Configuration Release´
-- ´dotnet nuget push "ThomasDeWulf.Tools.Core/bin/Release/ThomasDeWulf.Tools.Core.<VERSION>.nupkg" --source "github"´
+- `dotnet pack --Configuration Release`
+- `dotnet nuget push "ThomasDeWulf.Tools.Core/bin/Release/ThomasDeWulf.Tools.Core.<VERSION>.nupkg" --source "github"`
 
