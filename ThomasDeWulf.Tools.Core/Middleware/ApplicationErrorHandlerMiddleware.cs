@@ -15,9 +15,9 @@ namespace ThomasDeWulf.Tools.Core.Middleware
     {
         private readonly RequestDelegate _next;
         private readonly IWebHostEnvironment _env;
-        private readonly ILogger _logger;
+        private readonly ILogger<ApplicationErrorHandlerMiddleware> _logger;
 
-        public ApplicationErrorHandlerMiddleware(RequestDelegate next, IWebHostEnvironment env, ILogger logger)
+        public ApplicationErrorHandlerMiddleware(RequestDelegate next, IWebHostEnvironment env, ILogger<ApplicationErrorHandlerMiddleware> logger)
         {
             _next = next;
             _env = env;
