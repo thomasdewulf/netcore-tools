@@ -28,8 +28,8 @@ jobs:
       - name: Use GitVersion
         id: gitversion # step id used as reference for output values
         uses: gittools/actions/gitversion/execute@v0.9
-          - run: |
-              echo "Major: ${{ steps.gitversion.outputs.major }}"
+        run: |
+          echo "Major: ${{ steps.gitversion.outputs.major }}"
         
       - name: Cache SonarCloud packages
         uses: actions/cache@v1
