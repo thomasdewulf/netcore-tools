@@ -81,10 +81,6 @@ jobs:
 
       - name: Pack
         run: dotnet pack --output ./artifacts --configuration Release -p:Version=${{ steps.gitversion.outputs.fullSemVer }}
-      - uses: actions/upload-artifact@v1
-        with:
-          name: artifacts
-          path: ./artifacts
-          
+              
       - name: Publish packages
-        run: dotnet nuget push ./artifacts/**.nupkg --source "github"
+        run: dotnet nuget push "./artifacts/**.nupkg" --source "github" --api-key ${{secrets.GITHUB_TOKEN}}
