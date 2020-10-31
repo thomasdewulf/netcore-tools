@@ -8,7 +8,7 @@ namespace ThomasDeWulf.Tools.Core.Helpers
     {
         public static IEnumerable<string> FormatErrors(ModelStateDictionary modelState)
         {
-            return modelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage + " " + v.Exception?.Message);
+            return modelState.Values.SelectMany(v => v.Errors).Select(v => (v.ErrorMessage + " " + v.Exception?.Message).Trim());
         }
     }
 }
