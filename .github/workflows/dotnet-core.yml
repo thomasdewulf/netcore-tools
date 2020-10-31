@@ -71,4 +71,4 @@ jobs:
 
       - name: Pack library
         if: contains(github.ref, 'master')
-        run: dotnet pack --Configuration Release
+        run: dotnet pack --configuration Release
