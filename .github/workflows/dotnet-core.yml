@@ -79,12 +79,12 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
-      - name: Publish package to GitHub packages
-        if: contains(github.ref, 'master')
-        id: publish_nuget
-        uses: rohith/publish-nuget@v2
+      - name: Pack
+        run: dotnet pack --output ./artifacts --configuration Release -p:Version=${{ steps.gitversion.outputs.fullSemVer }}
+      - uses: actions/upload-artifact@v1
         with:
-          PROJECT_FILE_PATH: 'ThomasDeWulf.Tools.Core/ThomasDeWulf.Tools.Core.csproj'
-          VERSION_STATIC: "${{ steps.gitversion.outputs.fullSemVer }}"
-          NUGET_SOURCE: "https://nuget.pkg.github.com/thomasdewulf"
-          NUGET_KEY: ${{secrets.GITHUB_TOKEN}}
+          name: artifacts
+          path: ./artifacts
+          
+      - name: Publish packages
+        run: dotnet nuget push ./artifacts/**.nupkg --source "github"
