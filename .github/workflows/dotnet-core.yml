@@ -78,9 +78,23 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+        
+      - name: Create Release
+          id: create_release
+          if: contains(github.ref, 'master')
+          uses: actions/create-release@v1
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+          with:
+            tag_name: "v${{ steps.gitversion.outputs.fullSemVer }}"
+            release_name: Release ${{ steps.gitversion.outputs.fullSemVer }}
+            draft: false
+            prerelease: false
 
       - name: Pack
+        if: contains(github.ref, 'master')
         run: dotnet pack --output ./artifacts --configuration Release -p:Version=${{ steps.gitversion.outputs.fullSemVer }}
               
       - name: Publish packages
+        if: contains(github.ref, 'master')
         run: dotnet nuget push "./artifacts/**.nupkg" --skip-duplicate --no-symbols true
