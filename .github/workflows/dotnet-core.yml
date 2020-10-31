@@ -85,7 +85,7 @@ jobs:
         id: publish_nuget
         uses: rohith/publish-nuget@v2
         with:
-          PROJECT_FILE_PATH: ThomasDeWulf.Tools.Core/ThomasDewulf.Tools.Core.csproj
+          PROJECT_FILE_PATH: 'ThomasDeWulf.Tools.Core/ThomasDeWulf.Tools.Core.csproj'
           VERSION_STATIC: "${{ steps.gitversion.outputs.fullSemVer }}"
           NUGET_SOURCE: "https://nuget.pkg.github.com/thomasdewulf"
           NUGET_KEY: ${{secrets.GITHUB_TOKEN}}
