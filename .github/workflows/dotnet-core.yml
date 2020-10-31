@@ -19,17 +19,18 @@ jobs:
           java-version: '11' # The JDK version to make available on the path.
           java-package: jdk # (jre, jdk, or jdk+fx) - defaults to jdk
           architecture: x64 # (x64 or x86) - defaults to x64  
-
-      - name: Use GitVersion
-        id: gitversion # step id used as reference for output values
-        uses: gittools/actions/gitversion/execute@v0.9
-          - run: |
-            echo "Major: ${{ steps.gitversion.outputs.major }}"
                
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0.9
         with:
           versionSpec: '5.1.x'
+          
+      - name: Use GitVersion
+        id: gitversion # step id used as reference for output values
+        uses: gittools/actions/gitversion/execute@v0.9
+          - run: |
+              echo "Major: ${{ steps.gitversion.outputs.major }}"
+        
       - name: Cache SonarCloud packages
         uses: actions/cache@v1
         with:
