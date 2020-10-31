@@ -44,13 +44,13 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"thomasdewulf_netcore-tools" /o:"thomasdewulf" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.xunit.reportsPaths="**/*.coverage" 
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"thomasdewulf_netcore-tools" /o:"thomasdewulf" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths="**/*.coverage.cobertura.xml" 
       - name: Build
         shell: powershell
         run: dotnet build --configuration Release
       - name: Test
         shell: powershell
-        run: dotnet test --collect "Code Coverage" --results-directory "TestsResults"
+        run: dotnet test --collect "XPlat Code Coverage"
 
       - name: Publish SonarQube
         env:
