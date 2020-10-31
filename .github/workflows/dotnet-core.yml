@@ -9,13 +9,16 @@ jobs:
   build:
     name: Build
     runs-on: windows-latest
-    env:
-      JAVA_HOME: $JAVA_HOME_11_X64
     steps:
 
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '11' # The JDK version to make available on the path.
+          java-package: jdk # (jre, jdk, or jdk+fx) - defaults to jdk
+          architecture: x64 # (x64 or x86) - defaults to x64  
       - name: Cache SonarCloud packages
         uses: actions/cache@v1
         with:
