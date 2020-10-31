@@ -44,26 +44,14 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"thomasdewulf_netcore-tools" /o:"thomasdewulf" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths="*.coveragexml" /d:sonar.cs.vstest.reportsPaths="*.trx"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"thomasdewulf_netcore-tools" /o:"thomasdewulf" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.xunit.reportsPaths="**/*.trx" 
       - name: Build
         shell: powershell
         run: dotnet build --configuration Release
       - name: Test
         shell: powershell
         run: dotnet test --collect "Code Coverage" --results-directory "TestsResults"
-      - name: Convert coverage to XML
-        shell: powershell
-        run: |
-          Get-ChildItem -Recurse -Filter "*.coverage" | Foreach-Object {
-              $outfile = "$([System.IO.Path]::GetFileNameWithoutExtension($_.FullName)).coveragexml"
-              $output = [System.IO.Path]::Combine([System.IO.Path]::GetDirectoryName($_.FullName), $outfile)
-              & $env:CodeCoveragePath\CodeCoverage.exe analyze /output:$output $_.FullName 
-          }
 
-          Get-ChildItem -Recurse -Filter "*.coveragexml" | Foreach-Object { 
-              $file = Join-Path -Path $_.Directory -ChildPath $_.Name
-              Copy-Item $file -Destination 'TestsResults'
-          }
       - name: Publish SonarQube
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
