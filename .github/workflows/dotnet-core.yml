@@ -52,5 +52,8 @@ jobs:
         shell: powershell
         run: dotnet test --collect "Code Coverage"
       - name: Publish SonarQube
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
