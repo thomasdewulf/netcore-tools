@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using ThomasDeWulf.Tools.Core.Exceptions;
 using ThomasDeWulf.Tools.Core.Responses;
 
@@ -55,11 +56,14 @@ namespace ThomasDeWulf.Tools.Core.Middleware
         /// <returns></returns>
         private Task HandleExceptionAsync(HttpContext context, HttpStatusCodeException exception)
         {
-            var result = exception.Message;
+            var result = new ErrorResponse
+            {
+                Message = exception.Message
+            };
             context.Response.ContentType = exception.ContentType;
             context.Response.StatusCode = (int) exception.StatusCode;
             
-            return context.Response.WriteAsync(result);
+            return context.Response.WriteAsync(JsonConvert.SerializeObject(result));
         }
 
         private async Task HandleExceptionAsync(HttpContext context, Exception exception)
@@ -77,7 +81,7 @@ namespace ThomasDeWulf.Tools.Core.Middleware
                 response.StackTrace = exception.StackTrace;
             }
 
-            await context.Response.WriteAsync(response.ToString());
+            await context.Response.WriteAsync(JsonConvert.SerializeObject(response));
         }
     }
 }

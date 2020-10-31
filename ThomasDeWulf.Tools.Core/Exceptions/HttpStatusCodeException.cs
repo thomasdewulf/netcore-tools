@@ -10,12 +10,12 @@ namespace ThomasDeWulf.Tools.Core.Exceptions
         
         public HttpStatusCodeException(HttpStatusCode statusCode)
         {
-            this.StatusCode = statusCode;
+            StatusCode = statusCode;
         }
 
         public HttpStatusCodeException(HttpStatusCode statusCode, string message) : base(message)
         {
-            this.StatusCode = statusCode;
+            StatusCode = statusCode;
         }
     }
 }

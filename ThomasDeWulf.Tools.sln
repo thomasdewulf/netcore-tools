@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThomasDeWulf.Tools.Core", "ThomasDeWulf.Tools.Core\ThomasDeWulf.Tools.Core.csproj", "{33E8AF4F-A769-4E7D-BC27-2B6E9DDBD86A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThomasDeWulf.Tools.Tests", "ThomasDeWulf.Tools.Tests\ThomasDeWulf.Tools.Tests.csproj", "{CE2C9D84-DF3C-4185-B402-1EF95AE7910B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{33E8AF4F-A769-4E7D-BC27-2B6E9DDBD86A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33E8AF4F-A769-4E7D-BC27-2B6E9DDBD86A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33E8AF4F-A769-4E7D-BC27-2B6E9DDBD86A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE2C9D84-DF3C-4185-B402-1EF95AE7910B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE2C9D84-DF3C-4185-B402-1EF95AE7910B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE2C9D84-DF3C-4185-B402-1EF95AE7910B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE2C9D84-DF3C-4185-B402-1EF95AE7910B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
