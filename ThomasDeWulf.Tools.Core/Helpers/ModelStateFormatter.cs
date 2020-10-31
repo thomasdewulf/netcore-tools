@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace ThomasDeWulf.Tools.Core.Helpers
 {
-    public class ModelStateFormatter
+    public static class ModelStateFormatter
     {
         public static IEnumerable<string> FormatErrors(ModelStateDictionary modelState)
         {
