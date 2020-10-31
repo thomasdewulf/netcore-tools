@@ -1,7 +1,4 @@
-﻿using System.Text.Json.Serialization;
-using Newtonsoft.Json;
-
-namespace ThomasDeWulf.Tools.Core.Responses
+﻿namespace ThomasDeWulf.Tools.Core.Responses
 {
     public class ErrorResponse
     {
