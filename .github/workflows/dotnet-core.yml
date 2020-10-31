@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
 
       - uses: actions/checkout@v2
@@ -18,7 +18,14 @@ jobs:
         with:
           java-version: '11' # The JDK version to make available on the path.
           java-package: jdk # (jre, jdk, or jdk+fx) - defaults to jdk
-          architecture: x64 # (x64 or x86) - defaults to x64  
+          architecture: x64 # (x64 or x86) - defaults to x64 
+          
+      - name: Setup .NET Core @ Latest
+        uses: actions/setup-dotnet@v1
+        with:
+          source-url: https://nuget.pkg.github.com/thomasdewulf/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
                
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0.9
@@ -68,7 +75,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-
-      - name: Pack library
+      - name: Publish package to GitHub packages
         if: contains(github.ref, 'master')
-        run: dotnet pack --configuration Release
+        id: publish_nuget
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: ThomasDeWulf.Tools.Core/ThomasDewulf.Tools.Core.csproj
+          VERSION_STATIC: "${{ steps.gitversion.outputs.fullSemVer }}"
+          NUGET_SOURCE: "https://nuget.pkg.github.com/thomasdewulf"
+          NUGET_KEY: ${{secrets.GITHUB_TOKEN}}
